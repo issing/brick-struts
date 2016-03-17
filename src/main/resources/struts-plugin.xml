@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+  <constant name="struts.devMode" value="false" />
+  <constant name="struts.enable.SlashesInActionNames" value="true" />
+  <constant name="struts.ognl.allowStaticMethodAccess" value="false" />
+  <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+  <constant name="brick.plugin.domain" value="" />
+  <constant name="brick.result.name" value="success" />
+  <constant name="brick.result.suffix" value="jsp" />
+
+  <package name="brick-default" extends="json-default">
+    <result-types>
+      <result-type name="result" class="net.isger.brick.struts.BrickResult"
+        default="true" />
+    </result-types>
+
+    <default-action-ref name="index" />
+
+    <global-results>
+      <result name="json" type="json" />
+      <result name="failure">
+        <param name="location">/failure</param>
+      </result>
+    </global-results>
+    <global-exception-mappings>
+      <exception-mapping exception="java.lang.Exception"
+        result="failure" />
+    </global-exception-mappings>
+
+    <action name="**!*" class="net.isger.brick.struts.BrickAction">
+      <result>
+        <param name="location">${screen.see("@location", "{1}")}</param>
+      </result>
+    </action>
+
+    <action name="">
+      <result type="chain">index</result>
+    </action>
+  </package>
+</struts>
