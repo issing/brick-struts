@@ -11,7 +11,7 @@ public class BrickResult extends ServletDispatcherResult {
 
     private static final long serialVersionUID = 5841958140257071556L;
 
-    @Inject(Constants.BRICK_RESULT_SUFFIX)
+    @Inject(StrutsConstants.BRICK_RESULT_SUFFIX)
     private String suffix;
 
     public void execute(ActionInvocation invocation) throws Exception {

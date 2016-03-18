@@ -1,6 +1,6 @@
 package net.isger.brick.struts;
 
-public interface Constants extends net.isger.brick.web.Constants {
+public interface StrutsConstants extends net.isger.brick.web.WebConstants {
 
     public static final String BRICK_PLUGIN_DOMAIN = "brick.plugin.domain";
 

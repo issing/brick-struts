@@ -13,10 +13,10 @@ import com.opensymphony.xwork2.inject.Inject;
 
 public class BrickAction {
 
-    @Inject(Constants.BRICK_PLUGIN_DOMAIN)
+    @Inject(StrutsConstants.BRICK_PLUGIN_DOMAIN)
     private String domain;
 
-    @Inject(Constants.BRICK_RESULT_NAME)
+    @Inject(StrutsConstants.BRICK_RESULT_NAME)
     private String name;
 
     private Screen screen;
