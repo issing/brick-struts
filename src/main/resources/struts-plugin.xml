@@ -7,7 +7,6 @@
   <constant name="struts.enable.SlashesInActionNames" value="true" />
   <constant name="struts.ognl.allowStaticMethodAccess" value="false" />
   <constant name="struts.enable.DynamicMethodInvocation" value="false" />
-  <constant name="brick.plugin.domain" value="" />
   <constant name="brick.result.name" value="success" />
   <constant name="brick.result.suffix" value="jsp" />
 
@@ -24,8 +23,13 @@
       <result name="failure">
         <param name="location">/failure</param>
       </result>
+      <result name="unauth">
+        <param name="location">/unauth</param>
+      </result>
     </global-results>
     <global-exception-mappings>
+      <exception-mapping exception="net.isger.brick.auth.AuthException"
+        result="unauth" />
       <exception-mapping exception="java.lang.Exception"
         result="failure" />
     </global-exception-mappings>
