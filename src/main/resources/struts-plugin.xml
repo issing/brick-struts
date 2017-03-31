@@ -38,6 +38,9 @@
       <result>
         <param name="location">${screen.see("@location", "{1}")}</param>
       </result>
+      <result name="redirect" type="redirect">
+        <param name="location">${screen.see("@location", "")}</param>
+      </result>
     </action>
 
     <action name="">

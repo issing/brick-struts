@@ -1,6 +1,5 @@
 package net.isger.brick.struts;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import net.isger.brick.auth.AuthCommand;
@@ -11,6 +10,7 @@ import net.isger.util.Strings;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.inject.Inject;
 
 public class BrickAction {
@@ -22,11 +22,12 @@ public class BrickAction {
 
     public String execute() {
         HttpServletRequest request = ServletActionContext.getRequest();
-        ServletContext context = request.getSession().getServletContext();
         BaseCommand cmd = BrickListener.makeCommand(request,
-                ServletActionContext.getResponse());
+                ServletActionContext.getResponse(), ActionContext.getContext()
+                        .getParameters());
         /* 执行命令 */
-        BrickListener.getConsole(context).execute(cmd);
+        BrickListener.getConsole(request.getSession().getServletContext())
+                .execute(cmd);
         Object result = cmd.getResult();
         /* 授权访问 */
         if (cmd instanceof AuthCommand) {
