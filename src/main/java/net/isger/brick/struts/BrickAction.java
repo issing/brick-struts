@@ -2,16 +2,17 @@ package net.isger.brick.struts;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.isger.brick.auth.AuthCommand;
-import net.isger.brick.core.BaseCommand;
-import net.isger.brick.ui.Screen;
-import net.isger.brick.web.BrickListener;
-import net.isger.util.Strings;
-
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.inject.Inject;
+
+import net.isger.brick.auth.AuthCommand;
+import net.isger.brick.core.BaseCommand;
+import net.isger.brick.ui.Screen;
+import net.isger.brick.web.BrickListener;
+import net.isger.util.Helpers;
+import net.isger.util.Strings;
 
 public class BrickAction {
 
@@ -23,8 +24,8 @@ public class BrickAction {
     public String execute() {
         HttpServletRequest request = ServletActionContext.getRequest();
         BaseCommand cmd = BrickListener.makeCommand(request,
-                ServletActionContext.getResponse(), ActionContext.getContext()
-                        .getParameters());
+                ServletActionContext.getResponse(),
+                ActionContext.getContext().getParameters());
         /* 执行命令 */
         BrickListener.getConsole(request.getSession().getServletContext())
                 .execute(cmd);
@@ -32,7 +33,7 @@ public class BrickAction {
         /* 授权访问 */
         if (cmd instanceof AuthCommand) {
             /* TODO 访问拒绝 */
-            if (!(boolean) result) {
+            if (!Helpers.toBoolean(result)) {
                 System.out.println("访问拒绝");
             }
             result = ((BaseCommand) ((AuthCommand) cmd).getToken()).getResult();
