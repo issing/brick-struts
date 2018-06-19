@@ -1,5 +1,10 @@
 package net.isger.brick.struts;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
@@ -42,13 +47,32 @@ public class BrickAction {
         String name = null;
         if (result instanceof Screen) {
             this.screen = (Screen) result;
-            name = (String) this.screen.see("@name");
-            if (name != null) {
-                // 空字符串替换为默认值
-                name = Strings.empty(name, this.name);
+            if (this.screen.see("@stream") != null) {
+                name = "stream";
+            } else {
+                name = (String) this.screen.see("@name");
+                if (name != null) {
+                    // 空字符串替换为默认值
+                    name = Strings.empty(name, this.name);
+                }
             }
         }
         return name;
+    }
+
+    public InputStream getInputStream() {
+        try {
+            Object pending = screen.see("@stream");
+            if (pending instanceof String) {
+                return new FileInputStream((String) pending);
+            } else if (pending instanceof File) {
+                return new FileInputStream((File) pending);
+            } else if (pending instanceof InputStream) {
+                return (InputStream) pending;
+            }
+        } catch (FileNotFoundException e) {
+        }
+        return null;
     }
 
     public Screen getScreen() {
