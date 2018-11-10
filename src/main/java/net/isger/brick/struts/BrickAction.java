@@ -43,7 +43,7 @@ public class BrickAction {
             }
             result = ((BaseCommand) ((AuthCommand) cmd).getToken()).getResult();
         }
-        /* 屏显处理 */
+        /* 界面导向 */
         String name = null;
         if (result instanceof Screen) {
             this.screen = (Screen) result;
