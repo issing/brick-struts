@@ -28,12 +28,9 @@ public class BrickAction {
 
     public String execute() {
         HttpServletRequest request = ServletActionContext.getRequest();
-        BaseCommand cmd = BrickListener.makeCommand(request,
-                ServletActionContext.getResponse(),
-                ActionContext.getContext().getParameters());
+        BaseCommand cmd = BrickListener.makeCommand(request, ServletActionContext.getResponse(), ActionContext.getContext().getParameters());
         /* 执行命令 */
-        BrickListener.getConsole(request.getSession().getServletContext())
-                .execute(cmd);
+        BrickListener.getConsole(request.getSession().getServletContext()).execute(cmd);
         Object result = cmd.getResult();
         /* 授权访问 */
         if (cmd instanceof AuthCommand) {
