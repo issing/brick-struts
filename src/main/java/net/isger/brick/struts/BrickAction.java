@@ -43,11 +43,11 @@ public class BrickAction {
         /* 界面导向 */
         String name = null;
         if (result instanceof Screen) {
-            this.screen = (Screen) result;
-            if (this.screen.see("@stream") != null) {
+            screen = (Screen) result;
+            if (screen.see("@stream") != null) {
                 name = "stream";
             } else {
-                name = (String) this.screen.see("@name");
+                name = (String) screen.see("@name");
                 if (name != null) {
                     // 空字符串替换为默认值
                     name = Strings.empty(name, this.name);

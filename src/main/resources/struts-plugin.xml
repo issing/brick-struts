@@ -13,8 +13,7 @@
 
   <package name="brick-default" extends="json-default">
     <result-types>
-      <result-type name="result" class="net.isger.brick.struts.BrickResult"
-        default="true" />
+      <result-type name="result" class="net.isger.brick.struts.BrickResult" default="true" />
     </result-types>
 
     <default-action-ref name="index" />
@@ -29,10 +28,8 @@
       </result>
     </global-results>
     <global-exception-mappings>
-      <exception-mapping exception="net.isger.brick.auth.AuthException"
-        result="unauth" />
-      <exception-mapping exception="java.lang.Exception"
-        result="failure" />
+      <exception-mapping exception="net.isger.brick.auth.AuthException" result="unauth" />
+      <exception-mapping exception="java.lang.Throwable" result="failure" />
     </global-exception-mappings>
 
     <action name="**!*" class="net.isger.brick.struts.BrickAction">
@@ -45,9 +42,7 @@
       <result name="stream" type="stream">
         <param name="contentType">${screen.see("@contentType", "application/x-msdownload")}</param>
         <param name="inputName">inputStream</param>
-        <param name="contentDisposition">
-          attachment; filename=${screen.see("@name", "{2}")}
-        </param>
+        <param name="contentDisposition">attachment; filename=${screen.see("@name", "{2}")}</param>
         <param name="bufferSize">${screen.see("@buffer", "1024")}</param>
       </result>
     </action>
