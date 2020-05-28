@@ -6,11 +6,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.dispatcher.Parameter;
+import org.apache.struts2.dispatcher.multipart.StrutsUploadedFile;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.inject.Inject;
@@ -20,6 +24,7 @@ import net.isger.brick.auth.AuthCommand;
 import net.isger.brick.core.BaseCommand;
 import net.isger.brick.ui.Screen;
 import net.isger.brick.web.BrickListener;
+import net.isger.util.Callable;
 import net.isger.util.Helpers;
 import net.isger.util.Strings;
 
@@ -30,6 +35,8 @@ import net.isger.util.Strings;
  */
 public class BrickAction {
 
+    private static final Callable<Object> PURGER;
+
     @Inject(StrutsConstants.BRICK_RESULT_NAME)
     private String name;
 
@@ -37,6 +44,18 @@ public class BrickAction {
     private String encoding;
 
     private Screen screen;
+
+    static {
+        PURGER = new Callable<Object>() {
+            public Object call(Object... args) {
+                Object value = args[1];
+                if (value instanceof StrutsUploadedFile) {
+                    value = ((StrutsUploadedFile) value).getContent();
+                }
+                return value;
+            }
+        };
+    }
 
     /**
      * 活动入口
@@ -46,7 +65,11 @@ public class BrickAction {
     public String execute() {
         HttpServletRequest request = ServletActionContext.getRequest();
         HttpServletResponse response = ServletActionContext.getResponse();
-        BaseCommand cmd = BrickListener.makeCommand(request, response, ActionContext.getContext().getParameters());
+        Map<String, Object> parameters = new HashMap<String, Object>();
+        for (Map.Entry<String, Parameter> entry : ActionContext.getContext().getParameters().entrySet()) {
+            parameters.put(entry.getKey(), purge(entry.getValue().getObject()));
+        }
+        BaseCommand cmd = BrickListener.makeCommand(request, response, parameters);
         /* 执行命令 */
         BrickListener.getConsole(request.getSession().getServletContext()).execute(cmd);
         Object result = cmd.getResult();
@@ -81,6 +104,16 @@ public class BrickAction {
             }
         }
         return name;
+    }
+
+    /**
+     * 净化值
+     *
+     * @param value
+     * @return
+     */
+    private Object purge(Object value) {
+        return Helpers.compact(Helpers.each(value, PURGER));
     }
 
     /**

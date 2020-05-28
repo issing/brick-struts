@@ -1,11 +1,11 @@
 package net.isger.brick.struts;
 
-import net.isger.util.Strings;
-
-import org.apache.struts2.dispatcher.ServletDispatcherResult;
+import org.apache.struts2.result.ServletDispatcherResult;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.inject.Inject;
+
+import net.isger.util.Strings;
 
 public class BrickResult extends ServletDispatcherResult {
 
