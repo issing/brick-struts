@@ -19,7 +19,11 @@
     <default-action-ref name="index" />
 
     <global-results>
-      <result name="json" type="json" />
+      <result name="json" type="json">
+        <param name="root">screen</param>
+        <param name="ignoreHierarchy">false</param>
+        <param name="defaultDateFormat">yyyy-MM-dd HH:mm:ss</param>
+      </result>
       <result name="failure">
         <param name="location">/failure</param>
       </result>
