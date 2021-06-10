@@ -29,7 +29,7 @@ import net.isger.util.Helpers;
 import net.isger.util.Strings;
 
 /**
- * 行为活动
+ * 访问活动
  * 
  * @author issing
  */
@@ -75,9 +75,8 @@ public class BrickAction {
         Object result = cmd.getResult();
         /* 授权访问 */
         if (cmd instanceof AuthCommand) {
-            /* TODO 访问拒绝 */
             if (!Helpers.toBoolean(result)) {
-                System.out.println("访问拒绝");
+                name = "unauth";
             }
             result = ((BaseCommand) ((AuthCommand) cmd).getToken()).getResult();
         }
@@ -98,8 +97,7 @@ public class BrickAction {
                         }
                     }
                 } else {
-                    // 空字符串替换为默认值
-                    name = Strings.empty(name, this.name);
+                    name = Strings.empty(name, this.name); // 空字符串替换为默认值
                 }
             }
         }

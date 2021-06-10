@@ -7,6 +7,12 @@ import com.opensymphony.xwork2.inject.Inject;
 
 import net.isger.util.Strings;
 
+/**
+ * 访问结果
+ * 
+ * @author issing
+ *
+ */
 public class BrickResult extends ServletDispatcherResult {
 
     private static final long serialVersionUID = 5841958140257071556L;
