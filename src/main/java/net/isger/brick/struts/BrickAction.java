@@ -23,7 +23,8 @@ import net.isger.brick.Constants;
 import net.isger.brick.auth.AuthCommand;
 import net.isger.brick.core.BaseCommand;
 import net.isger.brick.ui.Screen;
-import net.isger.brick.web.BrickListener;
+import net.isger.brick.util.WebHelpers;
+import net.isger.brick.web.WebCommand;
 import net.isger.util.Callable;
 import net.isger.util.Helpers;
 import net.isger.util.Strings;
@@ -61,17 +62,18 @@ public class BrickAction {
      * 活动入口
      *
      * @return
+     * @throws Exception
      */
-    public String execute() {
+    public String execute() throws Exception {
         HttpServletRequest request = ServletActionContext.getRequest();
         HttpServletResponse response = ServletActionContext.getResponse();
         Map<String, Object> parameters = new HashMap<String, Object>();
         for (Map.Entry<String, Parameter> entry : ActionContext.getContext().getParameters().entrySet()) {
             parameters.put(entry.getKey(), purge(entry.getValue().getObject()));
         }
-        BaseCommand cmd = BrickListener.makeCommand(request, response, parameters);
+        BaseCommand cmd = WebCommand.makeCommand(request, response, parameters);
         /* 执行命令 */
-        BrickListener.getConsole(request.getSession().getServletContext()).execute(cmd);
+        WebHelpers.getConsole(request.getSession().getServletContext()).execute(cmd);
         Object result = cmd.getResult();
         /* 授权访问 */
         if (cmd instanceof AuthCommand) {
@@ -90,7 +92,7 @@ public class BrickAction {
                 name = (String) screen.see("@name");
                 if (name == null) {
                     if ((result = screen.see("result")) != null) {
-                        response.setContentType("text/plain; charset=" + Strings.empty(encoding, Constants.DEFAULT_ENCODING));
+                        response.setContentType("text/plain; charset=" + Strings.empty(encoding, Constants.ENC_UTF8));
                         try {
                             response.getWriter().print(result);
                         } catch (IOException e) {
