@@ -22,6 +22,7 @@ import com.opensymphony.xwork2.inject.Inject;
 import net.isger.brick.Constants;
 import net.isger.brick.auth.AuthCommand;
 import net.isger.brick.core.BaseCommand;
+import net.isger.brick.core.Console;
 import net.isger.brick.ui.Screen;
 import net.isger.brick.util.WebHelpers;
 import net.isger.brick.web.WebCommand;
@@ -71,9 +72,10 @@ public class BrickAction {
         for (Map.Entry<String, Parameter> entry : ActionContext.getContext().getParameters().entrySet()) {
             parameters.put(entry.getKey(), purge(entry.getValue().getObject()));
         }
-        BaseCommand cmd = WebCommand.makeCommand(request, response, parameters);
+        Console console = WebHelpers.getConsole(request.getSession().getServletContext());
+        BaseCommand cmd = WebCommand.makeCommand(console, request, response, parameters);
         /* 执行命令 */
-        WebHelpers.getConsole(request.getSession().getServletContext()).execute(cmd);
+        console.execute(cmd);
         Object result = cmd.getResult();
         /* 授权访问 */
         if (cmd instanceof AuthCommand) {
