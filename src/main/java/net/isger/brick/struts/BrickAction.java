@@ -94,7 +94,7 @@ public class BrickAction {
                 name = (String) screen.see("@name");
                 if (name == null) {
                     if ((result = screen.see("result")) != null) {
-                        response.setContentType("text/plain; charset=" + Strings.empty(encoding, Constants.ENC_UTF8));
+                        response.setContentType("text/plain; charset=" + Strings.empty(encoding, Constants.ENCODING_UTF_8));
                         try {
                             response.getWriter().print(result);
                         } catch (IOException e) {
