@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.isger</groupId>
         <artifactId>brick-primary</artifactId>
-        <version>0.0.3-SNAPSHOT</version>
-        <relativePath />
+        <version>0.0.3</version>
+        <relativePath/>
     </parent>
     <artifactId>brick-struts</artifactId>
     <packaging>jar</packaging>
@@ -23,7 +24,7 @@
     <properties>
         <servlet.version>2.5</servlet.version>
 
-        <struts.version>2.5.30</struts.version>
+        <struts.version>2.5.33</struts.version>
     </properties>
 
     <dependencies>
@@ -41,15 +42,14 @@
             <version>${struts.version}</version>
             <exclusions>
                 <exclusion>
-                    <groupId>org.apache.logging.log4j</groupId>
-                    <artifactId>log4j-api</artifactId>
+                    <groupId>commons-fileupload</groupId>
+                    <artifactId>commons-fileupload</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-io</groupId>
+                    <artifactId>commons-io</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.9.1</version>
         </dependency>
         <!-- 砖头依赖 -->
         <dependency>
